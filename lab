@@ -101,7 +101,7 @@ int main() {
 
 -------------------------------------------------------------------------------------------------------------------------------------
 prim's:
-#prim’s									INF = 9999999
+INF = 9999999
 V = 5
 G = [[0, 9, 75, 0, 0],
      [9, 0, 95, 19, 42],
@@ -129,7 +129,7 @@ while (no_edge < V - 1):
     no_edge += 1
 -------------------------------------------------------------------------------------------------------------------------------------
 merge sort:
-#merge sort								def mergeSort(array):
+def mergeSort(array):
     if len(array) > 1:
         r = len(array)//2
         L = array[:r]
@@ -164,7 +164,7 @@ print("Sorted array is: ")
 print(array)
 -------------------------------------------------------------------------------------------------------------------------------------
 quick sort:
-#Quick sort python						def partition(array, low, high):
+def partition(array, low, high):
   pivot = array[high]
   i = low - 1
   for j in range(low, high):
@@ -188,7 +188,7 @@ print(data)
 
 -------------------------------------------------------------------------------------------------------------------------------------
 dijkstra:
-#dijktras                                                                                                                                                                     #include <stdio.h>
+#include <stdio.h>
 #define V 4
 #define Inf 9999
 
@@ -258,9 +258,6 @@ All-pair shortest path
 #include <stdio.h>
 #define V 4
 #define INF 99999
-
-
-
 void floydWarshall(int dist[V][V])
 {
     int i, j, k;
@@ -312,9 +309,6 @@ transitive closure:
 #include <stdio.h>
 #define V 3
 #define INF 99999
-
-
-
 void floydWarshall(int dist[V][V])
 {
     int i, j, k;
@@ -364,8 +358,6 @@ int main()
 -------------------------------------------------------------------------------------------------------------------------------------
 Huffman coding:
 import heapq
-
-# A Huffman Tree Node
 class MinHeapNode:
     def __init__(self, data, freq):
         self.data = data
