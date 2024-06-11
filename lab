@@ -1,0 +1,462 @@
+Josephus:
+recurrsive: 
+#include <stdio.h>
+
+int josephusRecursive(int n, int k) {
+    if (n == 1)
+        return 0;
+    else
+        return (josephusRecursive(n - 1, k) + k) % n;
+}
+
+int main() {
+    int n, k;
+    printf("Enter the number of people: ");
+    scanf("%d", &n);
+    printf("Enter the position to be eliminated: ");
+    scanf("%d", &k);
+    printf("The person at position %d will be eliminated.\n", josephusRecursive(n, k) + 1);
+    return 0;
+}
+non-recurrsive: 
+
+#include <stdio.h>
+
+int josephusNonRecursive(int n, int k) {
+    int result = 0;
+    for (int i = 2; i <= n; i++) {
+        result = (result + k) % i;
+    }
+    return result;
+}
+
+int main() {
+    int n, k;
+    printf("Enter the number of people: ");
+    scanf("%d", &n);
+    printf("Enter the position to be eliminated: ");
+    scanf("%d", &k);
+    printf("The person at position %d will be eliminated.\n", josephusNonRecursive(n, k) + 1);
+    return 0;
+}
+
+Bit-Wise:
+#include <stdio.h>
+
+int josephusBitwise(int n, int k) {
+    return (k - 1) ^ ((1 << (int)log2(n)) - 1);
+}
+
+int main() {
+    int n, k;
+    printf("Enter the number of people: ");
+    scanf("%d", &n);
+    printf("Enter the position to be eliminated: ");
+    scanf("%d", &k);
+    printf("The person at position %d will be eliminated.\n", josephusBitwise(n, k) + 1);
+    return 0;
+}
+-------------------------------------------------------------------------------------------------------------------------------------
+Brute force:
+#include <stdio.h>
+#include <string.h>
+
+void search(char* pat, char* txt) {
+    int M = strlen(pat);
+    int N = strlen(txt);
+
+    // A loop to slide pat[] one by one
+    for (int i = 0; i <= N - M; i++) {
+        int j;
+
+        // For current index i, check for pattern match
+        for (j = 0; j < M; j++) {
+            if (txt[i + j] != pat[j]) {
+                break;
+            }
+        }
+
+        // If pattern matches at index i
+        if (j == M) {
+            printf("Pattern found at index %d\n", i);
+        }
+    }
+}
+
+int main() {
+    // Example 1
+    char txt1[] = "AABAACAADAABAABA";
+    char pat1[] = "AABA";
+    printf("Example 1:\n");
+    search(pat1, txt1);
+    
+    // Example 2
+    char txt2[] = "agd";
+    char pat2[] = "g";
+    printf("\nExample 2:\n");
+    search(pat2, txt2);
+
+    return 0;
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------
+prim's:
+#prim’s									INF = 9999999
+V = 5
+G = [[0, 9, 75, 0, 0],
+     [9, 0, 95, 19, 42],
+     [75, 95, 0, 51, 66],
+     [0, 19, 51, 0, 31],
+     [0, 42, 66, 31, 0]]
+selected = [0, 0, 0, 0, 0]
+no_edge = 0
+selected[0] = True
+print("Edge : Weight")
+while (no_edge < V - 1):
+    minimum = INF
+    x = 0
+    y = 0
+    for i in range(V):
+        if selected[i]:
+            for j in range(V):
+                if ((not selected[j]) and G[i][j]):  
+                    if minimum > G[i][j]:
+                        minimum = G[i][j]
+                        x = i
+                        y = j
+    print(str(x) + "-" + str(y) + "  :  " + str(G[x][y]))
+    selected[y] = True
+    no_edge += 1
+-------------------------------------------------------------------------------------------------------------------------------------
+merge sort:
+#merge sort								def mergeSort(array):
+    if len(array) > 1:
+        r = len(array)//2
+        L = array[:r]
+        M = array[r:]
+        mergeSort(L)
+        mergeSort(M)
+        i = j = k = 0
+        while i < len(L) and j < len(M):
+            if L[i] < M[j]:
+                array[k] = L[i]
+                i += 1
+            else:
+                array[k] = M[j]
+                j += 1
+            k += 1
+        while i < len(L):
+            array[k] = L[i]
+            i += 1
+            k += 1
+        while j < len(M):
+            array[k] = M[j]
+            j += 1
+            k += 1
+
+array = []
+n=int(input("Enter number of values: "))
+for i in range(n):
+    ip=int(input())
+    array.append(ip)
+mergeSort(array)
+print("Sorted array is: ")
+print(array)
+-------------------------------------------------------------------------------------------------------------------------------------
+quick sort:
+#Quick sort python						def partition(array, low, high):
+  pivot = array[high]
+  i = low - 1
+  for j in range(low, high):
+    if array[j] <= pivot:
+      i = i + 1
+      (array[i], array[j]) = (array[j], array[i])
+  (array[i + 1], array[high]) = (array[high], array[i + 1])
+  return i + 1
+def quickSort(array, low, high):
+  if low < high:
+    pi = partition(array, low, high)
+    quickSort(array, low, pi - 1)
+    quickSort(array, pi + 1, high)
+data = [8, 7, 2, 1, 0, 9, 6]
+print("Unsorted Array")
+print(data)
+size = len(data)
+quickSort(data, 0, size - 1)
+print('Sorted Array in Ascending Order:')
+print(data)
+
+-------------------------------------------------------------------------------------------------------------------------------------
+dijkstra:
+#dijktras                                                                                                                                                                     #include <stdio.h>
+#define V 4
+#define Inf 9999
+
+void dij(int g[V][V], int st) {
+    int c[V][V], d[V], vis[V], nextnode, mindistance;
+
+    // Create the cost matrix
+    for (int i = 0; i < V; i++) {
+        for (int j = 0; j < V; j++) {
+            if (g[i][j] == 0)
+                c[i][j] = Inf;
+            else
+                c[i][j] = g[i][j];
+        }
+    }
+
+    // Initialize distance and visited arrays
+    for (int i = 0; i < V; i++) {
+        d[i] = c[st][i];
+        vis[i] = 0;
+    }
+    d[st] = 0;
+    vis[st] = 1;
+    int count = 1;
+
+    // Main loop of Dijkstra's algorithm
+    while (count < V) {
+        mindistance = Inf;
+        for (int i = 0; i < V; i++)
+            if (d[i] < mindistance && !vis[i]) {
+                mindistance = d[i];
+                nextnode = i;
+            }
+
+        vis[nextnode] = 1;
+        for (int i = 0; i < V; i++)
+            if (!vis[i])
+                if (mindistance + c[nextnode][i] < d[i]) {
+                    d[i] = mindistance + c[nextnode][i];
+                }
+        count++;
+    }
+
+    // Print the distances from the source to each vertex
+    for (int i = 0; i < V; i++)
+        if (i != st) {
+            printf("\nDistance from source to vertex %d: %d", i, d[i]);
+        }
+    printf("\n");
+}
+
+int main() {
+    int g[V][V];
+    printf("Enter the adjacency matrix:\n");
+    for (int i = 0; i < V; i++) {
+        printf("Enter values for vertex %d: ", i);
+        for (int j = 0; j < V; j++) {
+            scanf("%d", &g[i][j]);
+        }
+    }
+
+    dij(g, 0);
+    return 0;
+}
+-------------------------------------------------------------------------------------------------------------------------------------
+All-pair shortest path
+#include <stdio.h>
+#define V 4
+#define INF 99999
+
+
+
+void floydWarshall(int dist[V][V])
+{
+    int i, j, k;
+    for (k = 0; k < V; k++) {
+
+        for (i = 0; i < V; i++) {
+
+            for (j = 0; j < V; j++) {
+
+                if (dist[i][k] + dist[k][j] < dist[i][j])
+                    dist[i][j] = dist[i][k] + dist[k][j];
+            }
+        }
+    }
+
+
+    printSolution(dist);
+}
+
+void printSolution(int dist[][V])
+{
+    for (int i = 0; i < V; i++) {
+        for (int j = 0; j < V; j++) {
+            if (dist[i][j] == 999)
+                printf("%s", "INF");
+            else
+                printf("%d", dist[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main()
+{
+
+    int graph[V][V];
+    for(int i=0;i<V;i++){
+        printf("enter values for vertex %d:",i);
+        for(int j=0;j<V;j++){
+            scanf("%d",&graph[i][j]);
+        }
+    }
+
+    floydWarshall(graph);
+    return 0;
+}
+-------------------------------------------------------------------------------------------------------------------------------------
+transitive closure:
+#include <stdio.h>
+#define V 3
+#define INF 99999
+
+
+
+void floydWarshall(int dist[V][V])
+{
+    int i, j, k;
+    for (k = 0; k < V; k++) {
+
+        for (i = 0; i < V; i++) {
+
+            for (j = 0; j < V; j++) {
+
+                if (dist[i][k] && dist[k][j] || dist[i][j])
+                    dist[i][j] = 1;
+            }
+        }
+    }
+
+
+    printSolution(dist);
+}
+
+void printSolution(int dist[][V])
+{
+    for (int i = 0; i < V; i++) {
+        for (int j = 0; j < V; j++) {
+            if (dist[i][j] == 999)
+                printf("%s", "INF");
+            else
+                printf("%d", dist[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main()
+{
+
+    int graph[V][V];
+    for(int i=0;i<V;i++){
+        printf("enter values for vertex %d:",i);
+        for(int j=0;j<V;j++){
+            scanf("%d",&graph[i][j]);
+        }
+    }
+
+    floydWarshall(graph);
+    return 0;
+}
+-------------------------------------------------------------------------------------------------------------------------------------
+Huffman coding:
+import heapq
+
+# A Huffman Tree Node
+class MinHeapNode:
+    def __init__(self, data, freq):
+        self.data = data
+        self.freq = freq
+        self.left = None
+        self.right = None
+
+    # Comparator function for heap
+    def __lt__(self, other):
+        return self.freq < other.freq
+
+# Function to print the Huffman codes
+def printCodes(root, code, huffman_codes):
+    if root is None:
+        return
+
+    # If this is a leaf node, then it contains one of the input characters
+    if root.left is None and root.right is None:
+        huffman_codes[root.data] = code
+
+    printCodes(root.left, code + "0", huffman_codes)
+    printCodes(root.right, code + "1", huffman_codes)
+
+# The main function that builds a Huffman Tree and prints codes by traversing the built Huffman Tree
+def HuffmanCodes(data, freq,a):
+    heap = []
+    for i in range(len(data)):
+        heapq.heappush(heap, MinHeapNode(data[i], freq[i]))
+
+    while len(heap) > 1:
+        left = heapq.heappop(heap)
+        right = heapq.heappop(heap)
+
+        top = MinHeapNode('$', left.freq + right.freq)
+        top.left = left
+        top.right = right
+        heapq.heappush(heap, top)
+
+    root = heapq.heappop(heap)
+    huffman_codes = {}
+    printCodes(root, "", huffman_codes)
+    d={}
+    for char, code in huffman_codes.items():
+        d[char]=code
+    print(d)
+    out=""
+    for i in a:
+        out=out+d.get(i)
+    print(out)
+        
+        
+
+# Driver code
+if __name__ == "__main__":
+    arr = ['a', 'b', 'c', 'd', 'e', 'f']
+    freq = [5, 9, 12, 13, 16, 45]
+    a="bacf"
+    HuffmanCodes(arr, freq,a)
+-------------------------------------------------------------------------------------------------------------------------------------
+NQueens:
+def solve_n_queens(n):
+    solutions = []
+    board = [-1] * n
+    def is_safe(row, col):
+        for i in range(row):
+            if board[i] == col or abs(board[i] - col) == abs(i - row):
+                return False
+        return True
+    def solve(row):
+        if row == n:
+            solutions.append(board[:])
+            return
+        for col in range(n):
+            if is_safe(row, col):
+                board[row] = col
+                solve(row + 1)
+                board[row] = -1
+    def print_board(solution):
+        for i in range(n):
+            for j in range(n):
+                if solution[i] == j:
+                    print('Q', end=' ')
+                else:
+                    print('.', end=' ')
+            print()
+    solve(0)
+    if solutions:
+        for solution in solutions:
+            print_board(solution)
+            print()
+    else:
+        print("No solution exists.")
+n = int(input("Enter the size of the board (N): "))
+solve_n_queens(n)
