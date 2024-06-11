@@ -101,32 +101,33 @@ int main() {
 
 -------------------------------------------------------------------------------------------------------------------------------------
 prim's:
-INF = 9999999
-V = 5
-G = [[0, 9, 75, 0, 0],
-     [9, 0, 95, 19, 42],
-     [75, 95, 0, 51, 66],
-     [0, 19, 51, 0, 31],
-     [0, 42, 66, 31, 0]]
-selected = [0, 0, 0, 0, 0]
-no_edge = 0
-selected[0] = True
-print("Edge : Weight")
-while (no_edge < V - 1):
-    minimum = INF
-    x = 0
-    y = 0
-    for i in range(V):
-        if selected[i]:
-            for j in range(V):
-                if ((not selected[j]) and G[i][j]):  
-                    if minimum > G[i][j]:
-                        minimum = G[i][j]
-                        x = i
-                        y = j
-    print(str(x) + "-" + str(y) + "  :  " + str(G[x][y]))
-    selected[y] = True
-    no_edge += 1
+INF=99999
+Graph=[]
+n=int(input())
+for i in range(n):
+    arr=[]
+    for j in range(n):
+      ip=int(input())
+      arr.append(ip)
+    Graph.append(arr)
+selected=[0]*n
+selected[0]=True
+no_edges=0
+while(no_edges<n-1):
+    x=0
+    y=0
+    minimum=INF
+    for i in range(n):
+        if(selected[i]):
+            for j in range(n):
+                if(not selected[j] and Graph[i][j]):
+                    if(minimum>Graph[i][j]):
+                        minimum=Graph[i][j]
+                        x=i
+                        y=j
+    print(str(x)+"-"+str(y)+"="+str(Graph[x][y]))
+    selected[y]=True
+    no_edges+=1
 -------------------------------------------------------------------------------------------------------------------------------------
 merge sort:
 def mergeSort(array):
